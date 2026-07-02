@@ -1,0 +1,14 @@
+{
+  "name": "pulperia-pos",
+  "version": "1.0.0",
+  "description": "Sistema de punto de venta para pulperia con escaneo de codigo de barras, fiado y corte de caja",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
+}
