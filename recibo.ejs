@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Recibo #<%= venta.id %></title>
+<style>
+  body { font-family: 'Courier New', monospace; width: 300px; margin: 0 auto; padding: 10px; }
+  h2 { text-align: center; margin-bottom: 0; }
+  .linea { display: flex; justify-content: space-between; }
+  hr { border: none; border-top: 1px dashed #000; }
+  .total { font-weight: bold; font-size: 1.1em; }
+</style>
+</head>
+<body>
+  <h2>Pulpería</h2>
+  <p style="text-align:center">Recibo #<%= venta.id %><br><%= venta.fecha %></p>
+  <hr>
+  <% detalle.forEach(d => { %>
+    <div class="linea"><span><%= d.cantidad %> x <%= d.nombre_producto %></span><span>₡<%= d.subtotal.toFixed(2) %></span></div>
+  <% }) %>
+  <hr>
+  <div class="linea total"><span>Total</span><span>₡<%= venta.total.toFixed(2) %></span></div>
+  <div class="linea"><span>Forma de pago</span><span><%= venta.forma_pago %></span></div>
+  <% if (cliente) { %><div class="linea"><span>Cliente</span><span><%= cliente.nombre %></span></div><% } %>
+  <% if (venta.monto_recibido) { %>
+    <div class="linea"><span>Recibido</span><span>₡<%= venta.monto_recibido.toFixed(2) %></span></div>
+    <div class="linea"><span>Vuelto</span><span>₡<%= venta.vuelto.toFixed(2) %></span></div>
+  <% } %>
+  <hr>
+  <p style="text-align:center">¡Gracias por su compra!</p>
+  <script>window.print();</script>
+</body>
+</html>

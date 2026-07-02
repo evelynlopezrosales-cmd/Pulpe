@@ -1,0 +1,69 @@
+<%- include('partials_head') %>
+
+<h1>Punto de venta</h1>
+
+<div class="caja-layout">
+  <div class="panel">
+    <label>Escanear o escribir código de barras</label>
+    <input type="text" id="inputCodigo" placeholder="Escanee aquí..." autofocus autocomplete="off">
+
+    <div id="scanner-box">
+      <button id="btnCamara" type="button">📷 Usar cámara para escanear</button>
+      <div id="reader" style="width: 100%; max-width: 400px; display:none;"></div>
+    </div>
+
+    <label>O buscar por nombre</label>
+    <input type="text" id="inputBuscar" placeholder="Ej: pan, coca..." autocomplete="off">
+    <div id="resultadosBusqueda"></div>
+
+    <div id="pesoModal" class="modal hidden">
+      <div class="modal-content">
+        <h3 id="pesoNombre"></h3>
+        <label>Cantidad (kg)</label>
+        <input type="number" id="pesoCantidad" step="0.01" min="0.01">
+        <button id="pesoConfirmar">Agregar</button>
+        <button id="pesoCancelar" class="secundario">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Carrito</h2>
+    <table id="tablaCarrito">
+      <thead><tr><th>Producto</th><th>Cant.</th><th>Precio</th><th>Subtotal</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="total-line">Total: <span id="totalVenta">₡0</span></div>
+
+    <label>Forma de pago</label>
+    <select id="formaPago">
+      <option value="efectivo">Efectivo</option>
+      <option value="sinpe">SINPE / Tarjeta</option>
+      <option value="fiado">Fiado</option>
+    </select>
+
+    <div id="clienteBox" class="hidden">
+      <label>Cliente</label>
+      <select id="clienteSelect">
+        <option value="">-- Seleccione --</option>
+        <% clientes.forEach(c => { %>
+          <option value="<%= c.id %>"><%= c.nombre %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div id="efectivoBox">
+      <label>Monto recibido</label>
+      <input type="number" id="montoRecibido" step="1" min="0">
+      <div id="vueltoTexto"></div>
+    </div>
+
+    <button id="btnCobrar" class="btn-principal">Cobrar</button>
+    <div id="mensajeError" class="error"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+<script src="/js/caja.js"></script>
+
+<%- include('partials_foot') %>

@@ -1,0 +1,74 @@
+<%- include('partials_head') %>
+
+<h1>Reportes</h1>
+
+<form method="GET" action="/reportes" class="form-inline">
+  <label>Desde</label>
+  <input type="datetime-local" name="desde" value="<%= desde.replace(' ', 'T') %>">
+  <label>Hasta</label>
+  <input type="datetime-local" name="hasta" value="<%= hasta.replace(' ', 'T') %>">
+  <button type="submit">Filtrar</button>
+</form>
+
+<div class="resumen-cards">
+  <div class="card">Efectivo<br><strong>₡<%= totales.efectivo.toFixed(2) %></strong></div>
+  <div class="card">SINPE/Tarjeta<br><strong>₡<%= totales.sinpe.toFixed(2) %></strong></div>
+  <div class="card">Fiado<br><strong>₡<%= totales.fiado.toFixed(2) %></strong></div>
+  <div class="card total">Total<br><strong>₡<%= totales.general.toFixed(2) %></strong></div>
+</div>
+
+<form method="POST" action="/reportes/cerrar-caja" onsubmit="return confirm('¿Cerrar caja con estos totales?')">
+  <input type="hidden" name="desde" value="<%= desde %>">
+  <input type="hidden" name="hasta" value="<%= hasta %>">
+  <button type="submit" class="btn-principal">Cerrar caja (guardar corte)</button>
+</form>
+
+<% if (stockBajo.length) { %>
+  <h2>⚠️ Stock bajo</h2>
+  <ul>
+    <% stockBajo.forEach(p => { %>
+      <li><%= p.nombre %>: quedan <%= p.stock %> <%= p.unidad %> (mínimo <%= p.stock_minimo %>)</li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<h2>Productos más vendidos en el rango</h2>
+<table class="tabla-datos">
+  <thead><tr><th>Producto</th><th>Cantidad</th><th>Total</th></tr></thead>
+  <tbody>
+    <% productosVendidos.forEach(p => { %>
+      <tr><td><%= p.nombre_producto %></td><td><%= p.cantidad %></td><td>₡<%= p.total.toFixed(2) %></td></tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<h2>Ventas del rango</h2>
+<table class="tabla-datos">
+  <thead><tr><th>#</th><th>Fecha</th><th>Total</th><th>Forma de pago</th><th></th></tr></thead>
+  <tbody>
+    <% ventas.forEach(v => { %>
+      <tr><td><%= v.id %></td><td><%= v.fecha %></td><td>₡<%= v.total.toFixed(2) %></td><td><%= v.forma_pago %></td>
+        <td><a href="/recibo/<%= v.id %>" target="_blank">Ver recibo</a></td></tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<h2>Cortes de caja anteriores</h2>
+<table class="tabla-datos">
+  <thead><tr><th>Fecha corte</th><th>Rango</th><th>Efectivo</th><th>SINPE</th><th>Fiado</th><th>Total</th><th>Ventas</th></tr></thead>
+  <tbody>
+    <% cortes.forEach(c => { %>
+      <tr>
+        <td><%= c.fecha_corte %></td>
+        <td><%= c.desde %> a <%= c.hasta %></td>
+        <td>₡<%= c.total_efectivo.toFixed(2) %></td>
+        <td>₡<%= c.total_sinpe.toFixed(2) %></td>
+        <td>₡<%= c.total_fiado.toFixed(2) %></td>
+        <td>₡<%= c.total_general.toFixed(2) %></td>
+        <td><%= c.cantidad_ventas %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('partials_foot') %>

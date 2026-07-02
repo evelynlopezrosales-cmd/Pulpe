@@ -1,0 +1,34 @@
+<%- include('partials_head') %>
+
+<h1>Clientes / Fiado</h1>
+
+<details>
+  <summary>+ Agregar cliente</summary>
+  <form method="POST" action="/clientes" class="form-inline">
+    <input name="nombre" placeholder="Nombre" required>
+    <input name="telefono" placeholder="Teléfono">
+    <button type="submit">Guardar</button>
+  </form>
+</details>
+
+<table class="tabla-datos">
+  <thead><tr><th>Nombre</th><th>Teléfono</th><th>Debe</th><th>Abonar</th><th></th></tr></thead>
+  <tbody>
+    <% clientes.forEach(c => { %>
+      <tr class="<%= c.saldo_fiado > 0 ? 'debe' : '' %>">
+        <td><a href="/clientes/<%= c.id %>"><%= c.nombre %></a></td>
+        <td><%= c.telefono || '-' %></td>
+        <td>₡<%= c.saldo_fiado.toFixed(2) %></td>
+        <td>
+          <form method="POST" action="/clientes/<%= c.id %>/abono" class="form-inline-abono">
+            <input name="monto" type="number" step="0.01" min="0.01" max="<%= c.saldo_fiado %>" placeholder="Monto" <%= c.saldo_fiado <= 0 ? 'disabled' : '' %>>
+            <button type="submit" <%= c.saldo_fiado <= 0 ? 'disabled' : '' %>>Abonar</button>
+          </form>
+        </td>
+        <td><a href="/clientes/<%= c.id %>">Ver historial</a></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('partials_foot') %>

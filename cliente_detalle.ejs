@@ -1,0 +1,28 @@
+<%- include('partials_head') %>
+
+<h1><%= cliente.nombre %></h1>
+<p>Saldo actual: <strong>₡<%= cliente.saldo_fiado.toFixed(2) %></strong></p>
+
+<h2>Ventas fiadas</h2>
+<table class="tabla-datos">
+  <thead><tr><th>Fecha</th><th>Total</th></tr></thead>
+  <tbody>
+    <% ventas.forEach(v => { %>
+      <tr><td><%= v.fecha %></td><td>₡<%= v.total.toFixed(2) %></td></tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<h2>Abonos</h2>
+<table class="tabla-datos">
+  <thead><tr><th>Fecha</th><th>Monto</th></tr></thead>
+  <tbody>
+    <% abonos.forEach(a => { %>
+      <tr><td><%= a.fecha %></td><td>₡<%= a.monto.toFixed(2) %></td></tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<a href="/clientes">&larr; Volver</a>
+
+<%- include('partials_foot') %>

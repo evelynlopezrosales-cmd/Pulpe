@@ -1,0 +1,47 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, Arial, sans-serif; margin: 0; background: #f4f6f5; color: #222; }
+.navbar { background: #1f4d3a; color: white; display: flex; align-items: center; padding: 10px 20px; gap: 20px; flex-wrap: wrap; }
+.nav-brand { font-weight: bold; font-size: 1.2em; }
+.nav-links a { color: white; text-decoration: none; margin-right: 15px; }
+.nav-links a:hover { text-decoration: underline; }
+.container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+
+h1 { color: #1f4d3a; }
+
+.panel { background: white; border-radius: 10px; padding: 15px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); margin-bottom: 15px; }
+.caja-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+@media (max-width: 800px) { .caja-layout { grid-template-columns: 1fr; } }
+
+label { display: block; margin-top: 10px; font-size: 0.85em; color: #555; }
+input, select { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em; }
+button { cursor: pointer; padding: 8px 14px; border: none; border-radius: 6px; background: #2c7a51; color: white; margin-top: 10px; }
+button.secundario { background: #999; }
+button.danger { background: #b33; }
+.btn-principal { width: 100%; font-size: 1.2em; padding: 14px; margin-top: 15px; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+th, td { padding: 8px; border-bottom: 1px solid #eee; text-align: left; font-size: 0.9em; }
+.tabla-datos input, .tabla-datos select { padding: 4px; }
+
+.total-line { text-align: right; font-size: 1.4em; font-weight: bold; margin-top: 10px; color: #1f4d3a; }
+.hidden { display: none; }
+.error { color: #b33; margin-top: 10px; }
+
+.stock-bajo { background: #fff3cd; }
+.debe { background: #fdeaea; }
+
+.resumen-cards { display: flex; gap: 10px; flex-wrap: wrap; margin: 15px 0; }
+.card { background: white; padding: 15px 20px; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); flex: 1; min-width: 130px; }
+.card.total { background: #1f4d3a; color: white; }
+
+.form-inline { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; margin: 10px 0; }
+.form-inline input, .form-inline select { width: auto; }
+.form-inline-abono { display: flex; gap: 6px; }
+.form-inline-abono input { width: 90px; }
+
+#resultadosBusqueda div { padding: 6px; border-bottom: 1px solid #eee; cursor: pointer; }
+#resultadosBusqueda div:hover { background: #f0f0f0; }
+
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
+.modal.hidden { display: none; }
+.modal-content { background: white; padding: 20px; border-radius: 10px; width: 300px; }

@@ -1,0 +1,54 @@
+<%- include('partials_head') %>
+
+<h1>Inventario</h1>
+
+<details>
+  <summary>+ Agregar producto</summary>
+  <form method="POST" action="/productos" class="form-inline">
+    <input name="codigo_barra" placeholder="Código de barra">
+    <input name="nombre" placeholder="Nombre" required>
+    <input name="precio" type="number" step="0.01" placeholder="Precio venta" required>
+    <input name="costo" type="number" step="0.01" placeholder="Costo">
+    <input name="stock" type="number" step="0.01" placeholder="Stock inicial">
+    <select name="unidad">
+      <option value="unidad">Por unidad</option>
+      <option value="kg">Por kg</option>
+    </select>
+    <input name="stock_minimo" type="number" step="0.01" placeholder="Stock mínimo" value="5">
+    <button type="submit">Guardar</button>
+  </form>
+</details>
+
+<table class="tabla-datos">
+  <thead>
+    <tr><th>Código</th><th>Nombre</th><th>Precio</th><th>Costo</th><th>Stock</th><th>Unidad</th><th>Mín.</th><th></th></tr>
+  </thead>
+  <tbody>
+    <% productos.forEach(p => { %>
+      <tr class="<%= p.stock <= p.stock_minimo ? 'stock-bajo' : '' %>">
+        <form method="POST" action="/productos/<%= p.id %>/editar">
+        <td><input name="codigo_barra" value="<%= p.codigo_barra || '' %>"></td>
+        <td><input name="nombre" value="<%= p.nombre %>" required></td>
+        <td><input name="precio" type="number" step="0.01" value="<%= p.precio %>"></td>
+        <td><input name="costo" type="number" step="0.01" value="<%= p.costo %>"></td>
+        <td><input name="stock" type="number" step="0.01" value="<%= p.stock %>"></td>
+        <td>
+          <select name="unidad">
+            <option value="unidad" <%= p.unidad === 'unidad' ? 'selected' : '' %>>Unidad</option>
+            <option value="kg" <%= p.unidad === 'kg' ? 'selected' : '' %>>Kg</option>
+          </select>
+        </td>
+        <td><input name="stock_minimo" type="number" step="0.01" value="<%= p.stock_minimo %>"></td>
+        <td>
+          <button type="submit">Guardar</button>
+        </form>
+        <form method="POST" action="/productos/<%= p.id %>/eliminar" onsubmit="return confirm('¿Eliminar este producto?')">
+          <button type="submit" class="danger">Eliminar</button>
+        </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include('partials_foot') %>
